@@ -17,8 +17,6 @@ $.openForm = function(){
     $("#game-contents").hide();
     $("#form").fadeIn();
 
-    // History
-    history.replaceState({}, "", "/");
 };
 
 //Custom function for closing menu
@@ -30,9 +28,6 @@ $.closeForm = function(){
 
     // Show cancel
     $("#cancel").show();
-
-    // History
-    history.replaceState({}, "", "/" + GAME_ID + "/" + LOGGED_IN_PLAYER + "/");
 
     // Show the page (if loading from a URL)
     $("body").show();

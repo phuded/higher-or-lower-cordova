@@ -53,76 +53,7 @@ $.prepareGame = function(){
         $("#selectedPlayerName").val(prevPlayer);
     }
 
-    // let path = window.location.pathname;
-    //
-    // path = path.split("/");
-    //
-    // if(path.length != 4 && path.length != 3){
-    //
-        // Get game player list - after cookie player is set
-        $.getGamePlayerList();
-    //
-        // Show the page
-        $("body").show();
-
-        return;
-    //}
-    //
-    // const gameId = path[1];
-    //
-    // let playerName = null;
-    //
-    // if(path.length == 4) {
-    //
-    //     playerName = path[2].toLowerCase();
-    // }
-    // else if(prevPlayer){
-    //
-    //     playerName = prevPlayer;
-    // }
-    //
-    // if(!playerName){
-    //
-    //     $.handleInvalidParams();
-    //
-    //     return;
-    // }
-    //
-    // $.ajax({
-    //     type: "GET",
-    //     url: "/api/games/" + gameId,
-    //     success: function(game){
-    //
-    //         $.ajax({
-    //             type: "GET",
-    //             url: "/api/players/" + playerName,
-    //             success: function(player){
-    //
-    //                 GAME_ID = gameId;
-    //
-    //                 $("#selectedPlayerName").val(playerName);
-    //
-    //                 // Get game player list - after player is set
-    //                 $.getGamePlayerList();
-    //
-    //                 $("#selectedGameName").val($.generateGameName(game));
-    //
-    //                 $("#start").html($("#start").html().replace("Create New", "Join"));
-    //
-    //                 // Launch the game
-    //                 $.startGame();
-    //             },
-    //             error: function(XMLHttpRequest, textStatus, errorThrown) {
-    //
-    //                 $.handleInvalidParams();
-    //             }
-    //         });
-    //     },
-    //     error: function(XMLHttpRequest, textStatus, errorThrown) {
-    //
-    //         $.handleInvalidParams();
-    //     }
-    // });
+    $.getGamePlayerList();
 };
 
 $.websocketListen = function () {
@@ -143,16 +74,7 @@ $.websocketListen = function () {
     // if user is running mozilla then use it's built-in WebSocket
     window.WebSocket = window.WebSocket || window.MozWebSocket;
 
-    const protocol = location.protocol;
-
-    let wsProtocol = "ws";
-
-    if(protocol === "https:"){
-
-        wsProtocol = "wss";
-    }
-
-    const url = wsProtocol + "://" +  location.host  + "/ws/" + GAME_ID + "/" + LOGGED_IN_PLAYER;
+    const url = "wss://" +  HOST  + "/ws/" + GAME_ID + "/" + LOGGED_IN_PLAYER;
 
     WS_CONNECTION = new WebSocket(url);
 
@@ -172,7 +94,7 @@ $.websocketListen = function () {
 
         // connection is opened and ready to use
         console.log("WS Listening on: " + url);
-
+        
         ping();
     };
 
@@ -341,7 +263,7 @@ $.createNewGame = function(players){
 
     $.ajax({
         type: "POST",
-        url: "https://drink-higher-lower.com/api/games",
+        url: URL + "games",
         data: {
             "name" : gameName,
             "players" : players,
@@ -394,7 +316,7 @@ $.joinGame = function(players){
 
     $.ajax({
         type: "PUT",
-        url: "https://drink-higher-lower.com/api/games/" + GAME_ID + "/players",
+        url: URL + "games/" + GAME_ID + "/players",
         data: {
             "players" : players
         },
@@ -450,7 +372,7 @@ $.playTurn = function(higherGuess){
 
 	$.ajax({
 		type: "PUT",
-		url: "https://drink-higher-lower.com/api/games/" + GAME_ID,
+		url: URL + "games/" + GAME_ID,
 		data: {
 		    "bet": currentBet,
 			"guess" : higherGuess,
@@ -677,7 +599,7 @@ $.leaveGame = function(){
 
     $.ajax({
         type: "PUT",
-        url: "https://drink-higher-lower.com/api/games/" + GAME_ID + "/players",
+        url: URL + "games/" + GAME_ID + "/players",
         data: {
             "playersToRemove" : [LOGGED_IN_PLAYER]
         },
@@ -758,3 +680,6 @@ const PRELOAD_IMAGES =['images/allcards.png', 'images/back.png', 'images/copy.pn
 
 // Websocket connection
 let WS_CONNECTION;
+
+const HOST = "drink-higher-lower.com";
+const URL = "https://" + HOST + "/api/";

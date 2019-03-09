@@ -7,7 +7,7 @@ $.getPlayerList = function(){
     //Get Player List
     $.ajax({
         type: "GET",
-        url: "https://drink-higher-lower.com/api/players",
+        url: URL + "players",
         success: function(json){
 
             const players = json.players;
@@ -44,7 +44,7 @@ $.getGamePlayerList = function(){
     //Get Player List
     $.ajax({
         type: "GET",
-        url: "https://drink-higher-lower.com/api/players",
+        url: URL + "players",
         success: function(json){
 
             const players = json.players;
@@ -83,7 +83,7 @@ $.getGameList = function(){
     //Get Player List
     $.ajax({
         type: "GET",
-        url: "https://drink-higher-lower.com/api/games?order-by=_id&dir=asc",
+        url: URL + "games?order-by=_id&dir=asc",
         success: function(json){
 
             const games = json.games;
@@ -221,7 +221,7 @@ $.deleteGame = function(id){
 
     $.ajax({
         type: "DELETE",
-        url: "https://drink-higher-lower.com/api/games/" + id,
+        url: URL + "games/" + id,
         dataType: "json",
         success: function(json){
 
@@ -299,7 +299,7 @@ $.createNewPlayer = function(show, player){
     //Add new player
     $.ajax({
         type: "POST",
-        url: "https://drink-higher-lower.com/api/players",
+        url: URL + "players",
         data: {	name: playerName,
                 firstName: fName,
                 surname: surname

@@ -93,7 +93,7 @@ $.generateDrinkersTable = function(table, orderBy, sDir, num, start){
 
 	$.ajax({
 		type: "GET",
-		url: "https://drink-higher-lower.com/api/players?order-by=" + orderBy + "&dir=" + sDir + "&num=" + num + "&start=" + start,
+		url: URL + "players?order-by=" + orderBy + "&dir=" + sDir + "&num=" + num + "&start=" + start,
 		success: function(json){
 
 			//Remove again

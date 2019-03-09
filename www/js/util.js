@@ -21,19 +21,6 @@ $.generateGameName = function(game, bold){
     return gameName + " [Created by: " + game.owner + "]";
 };
 
-$.handleInvalidParams = function () {
-
-    // Get game player list
-    $.getGamePlayerList();
-
-    // History
-    history.replaceState({}, "", "/");
-
-    // Show the page
-    $("body").show();
-};
-
-
 $.preLoadImages = function(imageList, callback) {
 
     var pic = [], i, total, loaded = 0;
